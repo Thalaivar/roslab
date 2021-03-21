@@ -1,0 +1,2 @@
+rrbot_control:rrbot_description:rrbot_explore
+-DCATKIN_DEVEL_PREFIX=/home/dhruvlaad/roslab/devel -DCMAKE_INSTALL_PREFIX=/home/dhruvlaad/roslab/install -G Unix Makefiles
