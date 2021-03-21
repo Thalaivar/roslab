@@ -17,6 +17,12 @@
         
 ```
 
+## Add Object to the World
+To add the object to the world, the gazebo world in [gazebo_ros_demos/rrbot_gazebo/worlds](https://github.com/ros-simulation/gazebo_ros_demos/tree/kinetic-devel/rrbot_gazebo/worlds) is launched using 
+```bash
+roslaunch rrbot_gazebo rrbot_world.launch
+```
+
 ## Modifications to the Robot
 The robot definition is created by modifying the package given in [gazebo_ros_demos/rrbot_description/urdf](https://github.com/ros-simulation/gazebo_ros_demos/tree/kinetic-devel/rrbot_description/urdf). More specifically:
 1. In `rrbot.xacro`, to add a revolute joint to the base the following changes are made
@@ -34,7 +40,7 @@ The robot definition is created by modifying the package given in [gazebo_ros_de
     <dynamics damping="0.7"/>
   </joint>
 ``` 
-This removes the original fixed joint and adds a revolute joint with axis aligned along $z$-axis at the origin, which connects `link1` to the world.
+This removes the original fixed joint and adds a revolute joint with axis aligned along z-axis at the origin, which connects `link1` to the world.
 
 2. To actuate the joint added previously, the following block of code is added in `rrbot.xacro`
 ```xml
