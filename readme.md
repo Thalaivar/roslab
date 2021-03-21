@@ -17,6 +17,10 @@
         
 ```
 
+## Modifications to the Robot
+The robot definition is created by modifying the package given in [gazebo_ros_demos/rrbot_description](https://github.com/ros-simulation/gazebo_ros_demos/tree/kinetic-devel/rrbot_description). More specifically:
+1. In 
+
 ## Procedure
 > The following assumes that `ros-noetic-desktop-full` has been installed successfully
 
@@ -26,10 +30,3 @@
  cd roslab/
  catkin_make
  ```
-2. Create `rrbot_control` package:
- ```bash
- catkin_create_pkg rrbot_control catkin controller_manager joint_state_controller robot_state_publishe
- mkdir rrbot_control/config
- mkdir rrbot_control/launch
- ```
-3. 
