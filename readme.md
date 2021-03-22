@@ -148,6 +148,46 @@ A very rudimentary form of object detection is carried out to identify when the 
 ```
 <img src="./figs/bbox_image.jpg" width=300>
 
+If the area of the identified contour exceeds a certain threshold value, then the object is in full view and we classify that as a succesful identification.
+
+## Exploration Code
+The code that carries out exploration and image processing is in `explore.py`. For each joint, publishers are created that send the position commands to corresponding controller topic
+```python
+  # n_joint = 3
+  self.joint_names = [f"joint{x}" for x in range(n_joints)]
+  self.pubs = {x: rospy.Publisher(
+          f"/rrbot/{x}_position_controller/command", 
+          Float64, 
+          queue_size=10) for x in self.joint_names}
+```
+
+A subscriber is created to read the raw images in from the camera
+```python
+  self.sub = rospy.Subscriber("/rrbot/camera1/image_raw", Image, self.process_raw_image)
+```
+
+To visualize the state of the image processing, a publisher is created that sends the image to *"/rrbot/bbox_image"*
+```python
+  self.mask_pub = rospy.Publisher("/rrbot/bbox_image", Image, queue_size=10)
+```
+
+The raw image before is formatted before it is passed on to the image processing code
+```python
+  def process_raw_image(self, raw_image: Image):
+    image = self.bridge.imgmsg_to_cv2(raw_image, desired_encoding="passthrough")
+    area, _, masked_image = image_processing(image)
+
+    if area > 0:
+      self.mask_pub.publish(self.bridge.cv2_to_imgmsg(masked_image, encoding="bgr8"))
+    else:
+      self.mask_pub.publish(self.bridge.cv2_to_imgmsg(image, encoding="bgr8"))
+    if area > self.detect_thresh:
+      self.detected = True
+```
+
+### Exploration
+Two kinds of control were implemented. The first was to hold the robot at specified joint angles. This is carried out in `Explore.hold_at_angle()`
+
 ## Procedure
 The following steps were followed to create the working repository
 1. Create *catkin* workspace:
