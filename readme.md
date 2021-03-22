@@ -118,7 +118,7 @@ The following steps were followed to create the working repository
 3. Create `rrbot_description/` package:
 ```bash
   cd ~/roslab/src
-  catkin_create_pkg rrbot_description catkin joint_state_publisher robot_state_publisher
+  catkin_create_pkg rrbot_description 
 
   # copy default data from gazebo_ros
   cp -r ~/gazebo_ros_demos/rrbot_description/meshes rrbot_description/
@@ -130,5 +130,13 @@ The following steps were followed to create the working repository
 5. Create `rrbot_control/` package:
 ```bash
   cd ~/roslab/src
-  catkin_create_pkg
+  catkin_create_pkg rrbot_control catkin joint_state_publisher robot_state_publisher effort_controllers
+  cd rrbot_control
+  mkdir config
+  mkdir launch
+
+  # copy default config and launch file from gazebo_ros
+  cp -r ~/gazebo_ros_demos/rrbot_control/config/rrbot_control.yaml config/
+  cp -r ~/gazebo_ros_demos/rrbot_control/launch/rrbot_control.launch launch/
+
 ```
