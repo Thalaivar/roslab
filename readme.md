@@ -89,6 +89,15 @@ and to add the actuator for the new joint
     </actuator>
   </transmission>
 ```
+## Adding Controller for New Joint
+The configuration for the controllers is adapted from [gazebo_ros_demos/rrbot_control/config](https://github.com/ros-simulation/gazebo_ros_demos/tree/kinetic-devel/rrbot_control/config). The `rrbot_control.yaml` file specifies two "effort" controllers that take in a joint position (angle) as reference and output force/torque to the actuators. Because a new revolute joint and actuator is added to the robot, the following lines are added to this file to specify the new controller: 
+```yaml
+  joint0_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: joint0
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+```
+Note that the `joint` name should match the one specified in the modified robot. The `type` of controller used is the same one for the other joints, along with same PID gains.
 
 ## Procedure
 > The following assumes that `ros-noetic-desktop-full` has been installed successfully
