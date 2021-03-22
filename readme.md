@@ -326,3 +326,8 @@ Joint 1 is kept constant, while joint 0 rotates in steps of pi/4 and joint 2 rot
 The final view from the camera (with the bounding box overlayed) when the robot classifies the object as "identified" is shown below
 
 <img src="./figs/final_view.jpg"  width=300>
+
+To generate the joint states plot, first run `rosrun joint_state_publisher joint_state_publisher _source_list:="['/rrbot/joint_states']` that will publish all joint states to `/joint_states`. Then open rqt plot with `rqt_plot` and add the following topics to the plotting:
+- /joint_states/position[0]
+- /joint_states/position[1]
+- /joint_states/position[2]
