@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import cv2
 import math
 import yaml
 import rospy
@@ -41,6 +42,8 @@ class Explore:
 			self.mask_pub.publish(self.bridge.cv2_to_imgmsg(image, encoding="bgr8"))
 		if area > self.detect_thresh:
 			self.detected = True
+			cv2.imwrite("./final_view.jpg", masked_image)
+
 		
 	def hold_at_angle(self, joint_angles=[math.pi / 2, math.pi / 4, 0]):
 		curr_ang = {name: x for name, x in zip(self.joint_names, joint_angles)}
@@ -62,6 +65,7 @@ class Explore:
 			this strategy
 		"""
 		curr_ang = {name: 0 for name in self.joint_names}
+		curr_ang["joint0"] = -math.pi / 2
 		curr_ang["joint1"] = math.pi / 4
 		while not rospy.is_shutdown() and not self.detected:
 			# rotate base joint for 2*pi radians
@@ -83,6 +87,7 @@ class Explore:
 			self.rate.sleep()
 
 		if self.detected:
+
 			hold_angles = [x for _, x in curr_ang.items()]
 			rospy.loginfo(f"Object detected! Holding at: {[round(x * 180 / math.pi, 2) for x in hold_angles]}")
 			self.hold_at_angle(hold_angles)
