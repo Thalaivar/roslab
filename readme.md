@@ -101,6 +101,7 @@ Note that the `joint` name should match the one specified in the modified robot.
 
 ## Procedure
 > The following assumes that `ros-noetic-desktop-full` has been installed successfully
+
 The following steps were followed to create the working repository
 1. Create *catkin* workspace:
 ```bash
