@@ -306,7 +306,7 @@ Next, in a new terminal, launch the joint position controllers
   roslaunch rrbot_control rrbot_control.launch
 ```
 
-Run the main exploration file
+Run the main exploration file in a new terminal
 ```bash
   python explore.py
 ```
@@ -315,3 +315,8 @@ Run the main exploration file
 ```bash
   rosrun image_view image_view image:=/rrbot/bbox_image
 ```
+
+## Results
+The following plot shows the trajectories of the three joints as the robot explores to find the checkerboard_plane
+
+<img src="./figs/joint_states_plot.png" width=300>
