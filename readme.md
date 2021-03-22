@@ -132,7 +132,7 @@ The following steps were followed to create the working repository
   cd ~/roslab/src
   catkin_create_pkg rrbot_description 
 
-  # copy default data from gazebo_ros
+  # copy default data from gazebo_ros_demos
   cp -r ~/gazebo_ros_demos/rrbot_description/meshes rrbot_description/
   cp -r ~/gazebo_ros_demos/rrbot_description/urdf rrbot_description/
 ```
@@ -147,10 +147,32 @@ The following steps were followed to create the working repository
   mkdir config
   mkdir launch
 
-  # copy default config and launch file from gazebo_ros
+  # copy default config and launch file from gazebo_ros_demos
   cp -r ~/gazebo_ros_demos/rrbot_control/config/rrbot_control.yaml config/
   cp -r ~/gazebo_ros_demos/rrbot_control/launch/rrbot_control.launch launch/
 ```
-Make  changes to `rrbot_control.yaml` and `rrbot_control.launch` as specified previously
+Make changes to `rrbot_control.yaml` and `rrbot_control.launch` as specified previously
 
 6. Create `rrbot_explore`/ package:
+```bash
+  cd ~/roslab/src
+  catkin_create_pkg rrbot_explore catkin gazebo_ros gazebo_ros_control rrbot_control rrbot_description xacro
+  cd rrbot_explore
+  mkdir worlds
+  mkdir launch
+
+  # copy default world file and launch file from gazebo_ros_demos
+  cp -r ~/gazebo_ros_demos/rrbot_gazebo/launch/rrbot_world.launch launch/
+  cp -r ~/gazebo_ros_demos/rrbot_gazebo/worlds/rrbot.world worlds/
+```
+Make changes to `rrbot.world` as specified previously. Note that in `rrbot_world.launch`, line 12 needs to be changed
+```xml
+  <!-- <arg name="world_name" value="$(find rrbot_gazebo)/worlds/rrbot.world"/>  -->
+  <arg name="world_name" value="$(find rrbot_explore)/worlds/rrbot.world"/>
+```
+
+7. Finally run `catkin_make`:
+```bash
+  cd ~/roslab
+  catkin_make
+```
