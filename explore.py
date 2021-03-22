@@ -75,7 +75,6 @@ class Explore:
 			curr_ang["joint2"] = 0
 			while curr_ang["joint2"] <= math.pi / 4 and not self.detected:
 				self.pubs["joint2"].publish(curr_ang["joint2"])
-
 				curr_ang["joint2"] += self.rps
 				self.rate.sleep()
 			

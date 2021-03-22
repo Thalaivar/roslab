@@ -202,8 +202,36 @@ In the second, the strategy followed to explore and find the object is:
 - Fix joint1's angle at pi/4
 - For every base joint, rotate joint2 from -pi/4 -> pi/4
 			
-The assumption is made that the object is on the ground. If this assumption holds, then we should be able to find the object with this strategy.
+The assumption is made that the object is on the ground. If this assumption holds, then we should be able to find the object with this strategy. Once the object is found, the robot is held at the last commanded position.
 
+```python
+  def exploratory(self):
+    curr_ang = {name: 0 for name in self.joint_names}
+    curr_ang["joint1"] = math.pi / 4
+    while not rospy.is_shutdown() and not self.detected:
+      # rotate base joint for 2*pi radians
+      curr_ang["joint0"] %= 2 * math.pi	
+      self.pubs["joint0"].publish(curr_ang["joint0"])
+
+      # fix first joint at specified angle
+      self.pubs["joint1"].publish(curr_ang["joint1"])
+
+      # rotate first joint between 0 and pi / 2
+      curr_ang["joint2"] = 0
+      while curr_ang["joint2"] <= math.pi / 4 and not self.detected:
+        self.pubs["joint2"].publish(curr_ang["joint2"])
+        curr_ang["joint2"] += self.rps
+        self.rate.sleep()
+      
+      if not self.detected:
+        curr_ang["joint0"] += (math.pi / 4)
+      self.rate.sleep()
+
+    if self.detected:
+      hold_angles = [x for _, x in curr_ang.items()]
+      rospy.loginfo(f"Object detected! Holding at: {[round(x * 180 / math.pi, 2) for x in hold_angles]}")
+      self.hold_at_angle(hold_angles)
+```
 ## Procedure
 The following steps were followed to create the working repository
 1. Create *catkin* workspace:
@@ -285,5 +313,5 @@ Run the main exploration file
 
 (Optional) In a new terminal, use `image_view` to see the camera view (and the bounding box over the identified checkerboard) in realtime
 ```bash
-  rosrun image_view image_view image:=/rrbot/camera1/image_raw
+  rosrun image_view image_view image:=/rrbot/bbox_image
 ```
