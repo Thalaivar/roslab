@@ -101,10 +101,33 @@ Note that the `joint` name should match the one specified in the modified robot.
 
 ## Procedure
 > The following assumes that `ros-noetic-desktop-full` has been installed successfully
-
+The following steps were followed to create the working repository
 1. Create *catkin* workspace:
- ```bash
- mkdir -p ~/roslab/src
- cd roslab/
- catkin_make
- ```
+```bash
+  mkdir -p ~/roslab/src
+  cd roslab/
+  catkin_make
+```
+
+2. Clone `gazebo_ros_demos/` in parent directory
+```bash
+  cd ~/ && git clone https://github.com/ros-simulation/gazebo_ros_demos.git
+```
+
+3. Create `rrbot_description/` package:
+```bash
+  cd ~/roslab/src
+  catkin_create_pkg rrbot_description catkin joint_state_publisher robot_state_publisher
+
+  # copy default data from gazebo_ros
+  cp -r ~/gazebo_ros_demos/rrbot_description/meshes rrbot_description/
+  cp -r ~/gazebo_ros_demos/rrbot_description/urdf rrbot_description/
+```
+
+4. Modify the `rrbot.xacro` and `rrbot.xml` files as mentioned previously.
+
+5. Create `rrbot_control/` package:
+```bash
+  cd ~/roslab/src
+  catkin_create_pkg
+```
