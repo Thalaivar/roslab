@@ -189,18 +189,18 @@ The raw image is formatted before it is passed on to the image processing code u
 Two kinds of control were implemented. The first was to hold the robot at specified joint angles. This is carried out in `Explore.hold_at_angle()`
 ```python
   def hold_at_angle(self, joint_angles=[math.pi / 2, math.pi / 4, 0]):
-		curr_ang = {name: x for name, x in zip(self.joint_names, joint_angles)}
-		while not rospy.is_shutdown():
-			for name, pub in self.pubs.items():
-				pub.publish(curr_ang[name])
+    curr_ang = {name: x for name, x in zip(self.joint_names, joint_angles)}
+    while not rospy.is_shutdown():
+      for name, pub in self.pubs.items():
+        pub.publish(curr_ang[name])
 
-			self.rate.sleep()
+      self.rate.sleep()
 ```
 
 In the second, the strategy followed to explore and find the object is:
 - Rotate base joint from 0 -> 2*pi
 - Fix joint1's angle at pi/4
-- For every base joint, rotate joint2 from -pi/4 -> pi/2
+- For every base joint, rotate joint2 from -pi/4 -> pi/4
 			
 The assumption is made that the object is on the ground. If this assumption holds, then we should be able to find the object with this strategy.
 
