@@ -36,9 +36,9 @@ class Explore:
 		area, _, masked_image = image_processing(image)
 
 		if area > 0:
-			self.mask_pub.publish(self.bridge.cv2_to_imgmsg(masked_image, encoding="passthrough"))
+			self.mask_pub.publish(self.bridge.cv2_to_imgmsg(masked_image, encoding="bgr8"))
 		else:
-			self.mask_pub.publish(self.bridge.cv2_to_imgmsg(image, encoding="passthrough"))
+			self.mask_pub.publish(self.bridge.cv2_to_imgmsg(image, encoding="bgr8"))
 		if area > self.detect_thresh:
 			self.detected = True
 		

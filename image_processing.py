@@ -31,4 +31,4 @@ def image_processing(image):
 
 if __name__ == '__main__':
 	image = cv2.imread("/Users/dhruvlaad/IIT/ID6100/roslab/ref.jpg")
-	experimental(image)
+	image_processing(image)
