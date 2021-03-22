@@ -27,6 +27,7 @@ To add the object to the world, the following lines are added to the gazebo worl
       <pose>-0.25 4.0 0.1 0 0 0</pose>
   </include>
 ```
+This was adapted from the example in the [Gazebo tutorial on model population](http://gazebosim.org/tutorials?tut=model_population&cat=build_world). The checkerboard plane is placed slightly above the ground
 
 ## Modifications to the Robot
 The robot definition is created by modifying the package given in [gazebo_ros_demos/rrbot_description/urdf](https://github.com/ros-simulation/gazebo_ros_demos/tree/kinetic-devel/rrbot_description/urdf). More specifically:
