@@ -113,7 +113,7 @@ To launch this new controller, the following changes are made to the `rrbot_cont
               joint2_position_controller"/>
 ```
 ## Object Detection
-![Reference JPEG](figs/ref.jpg?raw=true "Reference Image of Checkerboard Plane")
+![](figs/ref.jpg | width=100)
 A very rudimentary form of object detection is carried out to identify when the object comes into view. A sample image of the object in complete view is used as reference to illustrate the image processing used in `image_processing.py`:
 1. First all black checkerboard squares are converted to white:
 ```python
