@@ -306,7 +306,7 @@ Next, in a new terminal, launch the joint position controllers
   roslaunch rrbot_control rrbot_control.launch
 ```
 
-Run the main exploration file
+Run the main exploration file in a new terminal
 ```bash
   python explore.py
 ```
@@ -315,3 +315,19 @@ Run the main exploration file
 ```bash
   rosrun image_view image_view image:=/rrbot/bbox_image
 ```
+
+## Results
+The following plot shows the trajectories of the three joints as the robot explores to find the checkerboard_plane
+
+<img src="./figs/joint_states_plot.png" width=600>
+
+Joint 1 is kept constant, while joint 0 rotates in steps of pi/4 and joint 2 rotates continuosly to get an appropriate sweep.
+
+The final view from the camera (with the bounding box overlayed) when the robot classifies the object as "identified" is shown below
+
+<img src="./figs/final_view.jpg"  width=300>
+
+To generate the joint states plot, first run `rosrun joint_state_publisher joint_state_publisher _source_list:="['/rrbot/joint_states']` that will publish all joint states to `/joint_states`. Then open rqt plot with `rqt_plot` and add the following topics to the plotting:
+- /joint_states/position[0]
+- /joint_states/position[1]
+- /joint_states/position[2]
