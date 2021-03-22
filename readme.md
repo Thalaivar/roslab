@@ -319,4 +319,9 @@ Run the main exploration file in a new terminal
 ## Results
 The following plot shows the trajectories of the three joints as the robot explores to find the checkerboard_plane
 
-<img src="./figs/joint_states_plot.png" width=300>
+<img src="./figs/joint_states_plot.png" width=600>
+
+Joint 1 is kept constant, while joint 0 rotates in steps of pi/4 and joint 2 rotates continuosly to get an appropriate sweep.
+
+The final view from the camera (with the bounding box overlayed) when the robot classifies the object as "identified" is shown below
+ <img src="./figs/final_view.jpg", width=300>
