@@ -99,9 +99,21 @@ The configuration for the controllers is adapted from [gazebo_ros_demos/rrbot_co
 ```
 Note that the `joint` name should match the one specified in the modified robot. The `type` of controller used is the same one for the other joints, along with same PID gains.
 
-## Procedure
-> The following assumes that `ros-noetic-desktop-full` has been installed successfully
+To launch this new controller, the following changes are made to the `rrbot_control.launch` file
+```xml
+  <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+	output="screen" ns="/rrbot" args="joint_state_controller
+					  joint1_position_controller
+					  joint2_position_controller"/> -->
 
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+	  output="screen" ns="/rrbot" args="joint_state_controller
+              joint0_position_controller
+		  			  joint1_position_controller
+			  		  joint2_position_controller"/>
+```
+
+## Procedure
 The following steps were followed to create the working repository
 1. Create *catkin* workspace:
 ```bash
@@ -138,5 +150,7 @@ The following steps were followed to create the working repository
   # copy default config and launch file from gazebo_ros
   cp -r ~/gazebo_ros_demos/rrbot_control/config/rrbot_control.yaml config/
   cp -r ~/gazebo_ros_demos/rrbot_control/launch/rrbot_control.launch launch/
-
 ```
+Make  changes to `rrbot_control.yaml` and `rrbot_control.launch` as specified previously
+
+6. Create `rrbot_explore`/ package:
