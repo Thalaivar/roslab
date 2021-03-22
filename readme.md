@@ -6,14 +6,19 @@
 .
 ├── src
     ├── rrbot_control
-        ├── config      # declare and define all controllers
-        ├── launch      # spawn all controllers
+        ├── config            # declare and define all controllers
+        ├── launch            # spawn all controllers
     ├── rrbot_description
         ├── meshes      
-        ├── urdf        # definition files for the RR robot
+        ├── urdf              # definition files for the RR robot
     ├── rrbot_explore
-        ├── launch      # launch gazebo world with robot
-        ├── worlds      # gazebo world with selected object
+        ├── launch            # launch gazebo world with robot
+        ├── worlds            # gazebo world with selected object
+    
+    ├── explore.py            # exploration code with all relevant 
+                              # subscribers and publishers
+    
+    ├── image_processing.py   # image processing code
         
 ```
 
@@ -200,7 +205,7 @@ Two kinds of control were implemented. The first was to hold the robot at specif
 In the second, the strategy followed to explore and find the object is:
 - Rotate base joint from 0 -> 2*pi
 - Fix joint1's angle at pi/4
-- For every base joint, rotate joint2 from -pi/4 -> pi/4
+- For every base joint angle, rotate joint2 from -pi/4 -> pi/4
 			
 The assumption is made that the object is on the ground. If this assumption holds, then we should be able to find the object with this strategy. Once the object is found, the robot is held at the last commanded position.
 
@@ -331,3 +336,7 @@ To generate the joint states plot, first run `rosrun joint_state_publisher joint
 - /joint_states/position[0]
 - /joint_states/position[1]
 - /joint_states/position[2]
+
+The final position of the joints can either be deduced from the plot, or from the message that is logged in ROS (angles are in degrees):
+
+> [INFO] [1616418195.674291, 48.601000]: Object detected! Holding at: [90.0, 45.0, 16.32]

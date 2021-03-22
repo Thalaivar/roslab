@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-# [INFO] [1616418195.674291, 48.601000]: Object detected! Holding at: [90.0, 45.0, 16.32]
-
 import cv2
 import math
 import yaml
