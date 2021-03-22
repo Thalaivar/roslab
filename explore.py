@@ -28,6 +28,7 @@ def rrbot_exploratory_publisher(update_rate=100, rps=2 * math.pi / 60):
 		this strategy
 	"""
 	curr_ang = {name: 0 for name in joint_names}
+	curr_ang["joint0"] = math.pi / 2
 	curr_ang["joint1"] = math.pi / 4
 	while not rospy.is_shutdown():
 		# rotate base joint for 2*pi radians
@@ -38,15 +39,16 @@ def rrbot_exploratory_publisher(update_rate=100, rps=2 * math.pi / 60):
 		pubs["joint1"].publish(curr_ang["joint1"])
 
 		# rotate first joint between pi / 4 and 3 * pi / 4
-		curr_ang["joint2"] = math.pi / 4
-		while curr_ang["joint2"] <= math.pi * n / 6:
-			pubs["joint2"].publish(curr_ang["joint2"])
-			curr_ang["joint2"] += rps
-			rate.sleep()
+		curr_ang["joint2"] = 0 # - math.pi / 4
+		# while curr_ang["joint2"] <= math.pi / 2:
+		# 	pubs["joint2"].publish(curr_ang["joint2"])
+		# 	curr_ang["joint2"] += rps
+		# 	rate.sleep()
+		pubs["joint2"].publish(curr_ang["joint2"])
 		
-		curr_ang["joint0"] += rps
+		# curr_ang["joint0"] += (math.pi / 4)
 		rate.sleep()
 
 if __name__ == "__main__":
-	try: rrbot_exploratory_publisher(n=100)
+	try: rrbot_exploratory_publisher(update_rate=100)
 	except rospy.ROSInterruptException: pass

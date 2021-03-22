@@ -18,9 +18,14 @@
 ```
 
 ## Add Object to the World
-To add the object to the world, the gazebo world in [gazebo_ros_demos/rrbot_gazebo/worlds](https://github.com/ros-simulation/gazebo_ros_demos/tree/kinetic-devel/rrbot_gazebo/worlds) is launched using 
-```bash
-roslaunch rrbot_gazebo rrbot_world.launch
+To add the object to the world, the following lines are added to the gazebo world in [gazebo_ros_demos/rrbot_gazebo/worlds](https://github.com/ros-simulation/gazebo_ros_demos/tree/kinetic-devel/rrbot_gazebo/worlds)
+```xml
+  <!-- Spawn chosen object in world -->
+  <include>
+      <uri>model://checkerboard_plane</uri>
+      <name>checkerboard_plane</name>
+      <pose>-0.25 4.0 0.1 0 0 0</pose>
+  </include>
 ```
 
 ## Modifications to the Robot
