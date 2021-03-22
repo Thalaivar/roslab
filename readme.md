@@ -109,9 +109,27 @@ To launch this new controller, the following changes are made to the `rrbot_cont
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
 	  output="screen" ns="/rrbot" args="joint_state_controller
               joint0_position_controller
-		  			  joint1_position_controller
-			  		  joint2_position_controller"/>
+              joint1_position_controller
+              joint2_position_controller"/>
 ```
+## Object Detection
+![Reference JPEG](figs/ref.jpg?raw=true "Reference Image of Checkerboard Plane")
+A very rudimentary form of object detection is carried out to identify when the object comes into view. A sample image of the object in complete view is used as reference to illustrate the image processing used in `image_processing.py`:
+1. First all black checkerboard squares are converted to white:
+```python
+  THRESH = 40
+	idx = np.where((image <= [THRESH, THRESH, THRESH]).all(axis=2))
+	thresh_image = deepcopy(image)
+	thresh_image[idx] = [255, 255, 255]
+```
+2. The background is made to black using thresholding
+```python
+# threshold image to make bgd black
+	ret, thresh = cv2.threshold(thresh_image, 200, 250, type=cv2.THRESH_BINARY)
+	thresh_image = cv2.cvtColor(thresh, cv2.COLOR_BGR2GRAY)
+```
+
+3. Contours are identified and the 
 
 ## Procedure
 The following steps were followed to create the working repository
@@ -119,7 +137,6 @@ The following steps were followed to create the working repository
 ```bash
   mkdir -p ~/roslab/src
   cd roslab/
-  catkin_make
 ```
 
 2. Clone `gazebo_ros_demos/` in parent directory
@@ -175,4 +192,25 @@ Make changes to `rrbot.world` as specified previously. Note that in `rrbot_world
 ```bash
   cd ~/roslab
   catkin_make
+```
+
+## Running the Experiment
+First get Gazebo up and running with
+```bash
+  roslaunch rrbot_explore rrbot_world.launch
+```
+
+Next, in a new terminal, launch the joint position controllers
+```bash
+  roslaunch rrbot_control rrbot_control.launch
+```
+
+Run the main exploration file
+```bash
+  python explore.py
+```
+
+(Optional) In a new terminal, use `image_view` to see the camera view (and the bounding box over the identified checkerboard) in realtime
+```bash
+  rosrun image_view image_view image:=/rrbot/camera1/image_raw
 ```

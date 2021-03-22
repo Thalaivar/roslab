@@ -26,7 +26,6 @@ def image_processing(image):
 	else:
 		max_area, max_cont = 0, 0
 
-
 	return max_area, max_cont, image
 
 if __name__ == '__main__':
